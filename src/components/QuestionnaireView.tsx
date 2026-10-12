@@ -77,8 +77,11 @@ export default function QuestionnaireView({
             <span className="p-1.5 bg-indigo-500/20 text-indigo-400 rounded-lg">
               <Sparkles size={18} />
             </span>
-            <h2 className="text-xl font-bold text-white tracking-tight">
-              Ερωτηματολόγιο Επιλογής Προνοιών Κατοικίας
+            <h2 className="text-xl font-bold text-white tracking-tight flex items-center gap-2 flex-wrap">
+              <span>🎯 Ερωτηματολόγιο Επιλογής Προνοιών Κατοικίας</span>
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+                Κέντρο Διαμόρφωσης
+              </span>
             </h2>
           </div>
           <p className="text-neutral-300 text-xs sm:text-sm max-w-2xl leading-relaxed">
@@ -101,7 +104,7 @@ export default function QuestionnaireView({
           {onViewProvisions && (
             <button
               onClick={onViewProvisions}
-              className="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-neutral-800 hover:bg-neutral-700 text-white border border-neutral-700 flex items-center justify-center gap-1.5 transition-all"
+              className="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-neutral-800 hover:bg-neutral-700 text-white border border-neutral-700 flex items-center justify-center gap-1.5 transition-all shadow-sm"
             >
               <Layers size={14} />
               <span>Προβολή Προνοιών</span>
@@ -115,10 +118,22 @@ export default function QuestionnaireView({
         <motion.div 
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-emerald-500/20 border border-emerald-500/40 text-emerald-200 px-4 py-2.5 rounded-xl text-xs sm:text-sm flex items-center gap-2.5"
+          className="bg-emerald-500/20 border border-emerald-500/40 text-emerald-200 px-4 py-3 rounded-xl text-xs sm:text-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-lg"
         >
-          <CheckCircle2 size={18} className="text-emerald-400 shrink-0" />
-          <span>{saveSuccessMsg}</span>
+          <div className="flex items-center gap-2.5">
+            <CheckCircle2 size={18} className="text-emerald-400 shrink-0" />
+            <span className="font-semibold">{saveSuccessMsg}</span>
+          </div>
+          {onViewProvisions && (
+            <button
+              onClick={onViewProvisions}
+              className="px-3.5 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-neutral-950 font-bold text-xs flex items-center gap-1.5 shadow-sm transition-all shrink-0"
+            >
+              <Layers size={14} />
+              <span>Προβολή Προνοιών (Λίστα)</span>
+              <ArrowRight size={14} />
+            </button>
+          )}
         </motion.div>
       )}
 
@@ -679,7 +694,19 @@ export default function QuestionnaireView({
             </button>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center flex-wrap gap-2.5">
+            {onViewProvisions && (
+              <button
+                type="button"
+                onClick={onViewProvisions}
+                className="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-neutral-300 hover:text-white bg-neutral-800 hover:bg-neutral-700 border border-neutral-700 flex items-center justify-center gap-1.5 transition-all"
+              >
+                <Layers size={15} />
+                <span>Προβολή Προνοιών</span>
+                <ArrowRight size={14} />
+              </button>
+            )}
+
             {activeSection < sections.length - 1 && (
               <button
                 onClick={() => setActiveSection(prev => prev + 1)}

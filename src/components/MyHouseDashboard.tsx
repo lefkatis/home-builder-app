@@ -45,7 +45,7 @@ export default function MyHouseDashboard({
   onAddProvision,
   onDeleteProvision
 }: MyHouseDashboardProps) {
-  const [activeTab, setActiveTab] = useState<'list' | 'flow' | 'buy' | 'rules' | 'config' | 'export'>('list');
+  const [activeTab, setActiveTab] = useState<'config' | 'list' | 'flow' | 'buy' | 'rules' | 'export'>('config');
   const [selectedRooms, setSelectedRooms] = useState<Set<string>>(new Set(projectData.rooms));
   const [selectedTypes, setSelectedTypes] = useState<Set<string>>(new Set([
     '💡 Φώτα', '🔌 Πρίζες', '🚰 Υδραυλικά', '🔒 Ασφάλεια', '🔧 Συντήρηση', '🖥️ Server Cabinet', '📡 Έξυπνο Σπίτι'
@@ -181,14 +181,36 @@ export default function MyHouseDashboard({
               <Database size={11} className={isSqliteConnected ? 'text-emerald-500 animate-pulse' : 'text-amber-500'} />
               <span>{isSqliteConnected ? 'SQLite Αποθηκευμένο' : 'Τοπική Προσωρινή Μνήμη'}</span>
             </div>
+            {activeTab !== 'config' && (
+              <button
+                onClick={() => setActiveTab('config')}
+                className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-indigo-50 dark:bg-indigo-950/80 border border-indigo-300 dark:border-indigo-700 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-100 flex items-center gap-1 transition-colors"
+                title="Επιστροφή στο Ερωτηματολόγιο"
+              >
+                <Settings size={11} />
+                <span>Επεξεργασία Ερωτηματολογίου</span>
+              </button>
+            )}
           </div>
           <p className="text-xs text-neutral-500 dark:text-neutral-400">
             {projectData.rooms.length} Χώροι • {stats.total} Πρόνοιες • {stats.completed} Ολοκληρωμένες ({stats.percentComplete}%) • Εκτιμώμενος Εξοπλισμός: ~{stats.totalCost.toLocaleString('el-GR')}€
           </p>
         </div>
 
-        {/* Sub-tab Navigation */}
+        {/* Sub-tab Navigation - Questionnaire at the epicenter */}
         <div className="flex items-center flex-wrap gap-1 bg-neutral-200/80 dark:bg-neutral-950 p-1 rounded-xl border border-neutral-300 dark:border-neutral-800 text-xs font-semibold">
+          <button
+            onClick={() => setActiveTab('config')}
+            className={`px-3.5 py-1.5 rounded-lg flex items-center gap-1.5 transition-all font-bold ${
+              activeTab === 'config' 
+                ? 'bg-gradient-to-r from-indigo-600 to-cyan-600 text-white shadow-md shadow-indigo-600/30 ring-1 ring-cyan-400/40' 
+                : 'text-indigo-600 dark:text-cyan-400 hover:text-indigo-900 dark:hover:text-white bg-indigo-50/60 dark:bg-cyan-950/40'
+            }`}
+          >
+            <Settings size={13} />
+            <span>📝 1. Ερωτηματολόγιο</span>
+          </button>
+
           <button
             onClick={() => setActiveTab('list')}
             className={`px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition-all ${
@@ -198,7 +220,7 @@ export default function MyHouseDashboard({
             }`}
           >
             <Grid size={13} />
-            <span>Πρόνοιες ({filteredProvisions.length})</span>
+            <span>📋 2. Οι Πρόνοιες Μου ({filteredProvisions.length})</span>
           </button>
 
           <button
@@ -210,7 +232,7 @@ export default function MyHouseDashboard({
             }`}
           >
             <Workflow size={13} />
-            <span>Διάγραμμα</span>
+            <span>🔀 3. Διάγραμμα</span>
           </button>
 
           <button
@@ -222,7 +244,7 @@ export default function MyHouseDashboard({
             }`}
           >
             <ShoppingCart size={13} />
-            <span>Αγορές & Budget</span>
+            <span>🛒 4. Αγορές & Budget</span>
           </button>
 
           <button
@@ -234,19 +256,7 @@ export default function MyHouseDashboard({
             }`}
           >
             <FileText size={13} />
-            <span>Κανόνες</span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab('config')}
-            className={`px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition-all ${
-              activeTab === 'config' 
-                ? 'bg-cyan-600 text-white shadow-sm' 
-                : 'text-cyan-700 dark:text-cyan-400 hover:text-cyan-900 dark:hover:text-white'
-            }`}
-          >
-            <Settings size={13} />
-            <span>Ερωτηματολόγιο</span>
+            <span>📜 5. Κανόνες</span>
           </button>
 
           <button
@@ -258,7 +268,7 @@ export default function MyHouseDashboard({
             }`}
           >
             <Printer size={13} />
-            <span>Εκτύπωση</span>
+            <span>🖨️ Εκτύπωση</span>
           </button>
         </div>
 
